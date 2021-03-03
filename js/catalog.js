@@ -11,8 +11,13 @@ function populateForm() {
 
   //TODO: Add an <option> tag inside the form's select for each product
   const selectElement = document.getElementById('items');
-  for (let i in Product.allProducts) {
 
+
+
+  for (let i in Product.allProducts) {
+const optionElement = document.createElement('option')
+selectElement.appendChild(optionElement)
+optionElement.textContent=Product.allProducts[i]. name;
   }
 
 }
@@ -21,30 +26,59 @@ function populateForm() {
 // object, save the whole thing back to local storage and update the screen
 // so that it shows the # of items in the cart and a quick preview of the cart itself.
 function handleSubmit(event) {
-
+  event.preventDefault();
   // TODO: Prevent the page from reloading
-
+  // const let = localStorage.getItem('cart');
+  // cart = JSON.parse(localCart);
   // Do all the things ...
   addSelectedItemToCart();
   cart.saveToLocalStorage();
   updateCounter();
   updateCartPreview();
-
+  document.getElementById('catalog').reset();
 }
 
 // TODO: Add the selected item and quantity to the cart
 function addSelectedItemToCart() {
+  const selectElement = document.getElementById('items');
+
+  const selectedItemIndex = selectElement.selectedIndex;
+  
+ 
+  const selectedItem = selectElement.options[selectedItemIndex].text;
+  const quantity = document.getElementById('quantity');
+  const quantityValue = quantity.value;
+  console.log(quantityValue);
+  cart.addItem(selectedItem,quantityValue);
   // TODO: suss out the item picked from the select list
   // TODO: get the quantity
   // TODO: using those, add one item to the Cart
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
-function updateCounter() {}
+function updateCounter() {
+  const headerCounter = document.getElementById('itemCount');
+  headerCounter.textContent=`(${cart.items.length})`
+}
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
+  const selectElement = document.getElementById('items');
+  const selectedItemIndex = selectElement.selectedIndex;
+ 
+  const selectedItem = selectElement.options[selectedItemIndex].text;
+  const quantity = document.getElementById('quantity');
+  
+  const quantityValue = quantity.value;
+
+  const contentDiv=document.getElementById('cartContents');
+  const ulElement = document.createElement('ul')
+  contentDiv.appendChild(ulElement)
+  const liElement = document.createElement('li')
+  ulElement.appendChild(liElement)
+  liElement.textContent= `(${quantityValue}) of ${selectedItem}`
+
   // TODO: Add a new element to the cartContents div with that information
 }
 
