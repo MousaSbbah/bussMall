@@ -36,13 +36,11 @@ function showCart() {
   table.appendChild (tableRows);
   // TODO: Create a TD for the delete link, quantity,  and the item
   let deleteLinkTableData = document.createElement ('td');
-  // deleteLink = document.createElement ('a')
-  // deleteLink.textContent = 'X';
-  // deleteLink.setAttribute =('href' , removeItemFromCart());
-  // deleteLinkTableData.appendChild (deleteLink);
   tableRows.appendChild (deleteLinkTableData);
-  deleteLinkTableData.textContent = 'X';
-  deleteLinkTableData.onclick='removeItemFromCart(event)';
+  let pElement = document.createElement ('td');
+  deleteLinkTableData.appendChild (pElement);
+  pElement.textContent = 'X';
+  pElement.onclick='removeItemFromCart(event)';
   
   let deleteQuantity = document.createElement ('td');
   tableRows.appendChild (deleteQuantity);
@@ -51,6 +49,17 @@ function showCart() {
   let deleteItem = document.createElement('td');
   tableRows.appendChild (deleteItem);
   deleteItem.textContent = cart.items[i].product;
+  for (let j = 0; j < Product.allProducts.length; j++) {
+    if( cart.items[i].product === Product.allProducts[j].name   ){
+      let imgElement = document.createElement('img');
+      deleteItem.appendChild (imgElement);
+      imgElement.src=`./${Product.allProducts[j].filePath}`;
+    }
+  }
+  
+  
+  
+  
   
 
   // TODO: Add the TR to the TBODY and each of the TD's to the TR
@@ -64,15 +73,16 @@ function showCart() {
 
 function removeItemFromCart(event) {
   const clickedItem = event.target;
-  const tablebodey = document.querySelector('tbody')
- const rowNumber=clickedItem.parentNode.rowIndex;
+  const tablebodey = document.querySelector('tbody');
+ const rowNumber=clickedItem.parentNode.parentNode.rowIndex;
  
  tablebodey.removeChild(tablebodey.childNodes[rowNumber-1]);
  console.log(rowNumber);
 //  console.log(tablebodey.childNodes)
 //   // TODO: When a delete link is clicked, use cart.removeItem to remove the correct item
-  cart.removeItem ();
+  cart.removeItem (rowNumber-1);
 //   // TODO: Save the cart back to local storage
+
   localStorage.setItem('cart', JSON.stringify(cart.items));
 // // TODO: Re-draw the cart table
 //    renderCart ();
