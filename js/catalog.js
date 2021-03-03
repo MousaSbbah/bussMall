@@ -11,6 +11,11 @@ function populateForm() {
 
   //TODO: Add an <option> tag inside the form's select for each product
   const selectElement = document.getElementById('items');
+  selectElement.required = true ;
+  const option1Element = document.createElement('option')
+selectElement.appendChild(option1Element)
+option1Element.textContent='Choose Product';
+option1Element.value='';
 
 
 
@@ -18,6 +23,7 @@ function populateForm() {
 const optionElement = document.createElement('option')
 selectElement.appendChild(optionElement)
 optionElement.textContent=Product.allProducts[i]. name;
+optionElement.value=Product.allProducts[i]. name;
   }
 
 }
@@ -45,8 +51,9 @@ function addSelectedItemToCart() {
   const selectedItemIndex = selectElement.selectedIndex;
   
  
-  const selectedItem = selectElement.options[selectedItemIndex].text;
+  const selectedItem = selectElement.options[selectedItemIndex].value;
   const quantity = document.getElementById('quantity');
+  quantity.required = true ;
   const quantityValue = quantity.value;
   console.log(quantityValue);
   cart.addItem(selectedItem,quantityValue);

@@ -205,3 +205,8 @@ label span {
   color: red;
   cursor: pointer;
 }
+
+ td img{
+  width: 50px;
+  padding-left: 30px;
+}
