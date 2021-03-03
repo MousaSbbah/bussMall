@@ -42,7 +42,7 @@ function showCart() {
   // deleteLinkTableData.appendChild (deleteLink);
   tableRows.appendChild (deleteLinkTableData);
   deleteLinkTableData.textContent = 'X';
-  deleteLinkTableData.addEventListener ('click', removeItemFromCart());
+  deleteLinkTableData.onclick='removeItemFromCart(event)';
   
   let deleteQuantity = document.createElement ('td');
   tableRows.appendChild (deleteQuantity);
@@ -63,11 +63,17 @@ function showCart() {
 }
 
 function removeItemFromCart(event) {
-
+  const clickedItem = event.target;
+  const tablebodey = document.querySelector('tbody')
+ const rowNumber=clickedItem.parentNode.rowIndex;
+ 
+ tablebodey.removeChild(tablebodey.childNodes[rowNumber-1]);
+ console.log(rowNumber);
+//  console.log(tablebodey.childNodes)
 //   // TODO: When a delete link is clicked, use cart.removeItem to remove the correct item
-//   cart.removeItem ();
+  cart.removeItem ();
 //   // TODO: Save the cart back to local storage
-  localStorage.setItem('cart', JSON.stringify(cart));
+  localStorage.setItem('cart', JSON.stringify(cart.items));
 // // TODO: Re-draw the cart table
 //    renderCart ();
 
